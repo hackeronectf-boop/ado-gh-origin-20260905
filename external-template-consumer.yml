@@ -1,0 +1,10 @@
+trigger: none
+resources:
+  repositories:
+  - repository: templates
+    type: github
+    endpoint: GH-PAT-NO-LOW-20260905
+    name: msrc-odgrso-test/ado-gh-private-scope-20260905
+    ref: refs/heads/main
+extends:
+  template: template.yml@templates

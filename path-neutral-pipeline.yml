@@ -1,0 +1,21 @@
+trigger: none
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - security/**
+      - path-neutral-pipeline.yml
+    exclude:
+      - docs/**
+pool:
+  vmImage: ubuntu-latest
+steps:
+- checkout: self
+  fetchDepth: 0
+- bash: |
+    set -euo pipefail
+    echo "PATH_CHECK_SOURCE=$BUILD_SOURCEVERSION"
+    git diff --name-status "$(git rev-parse HEAD^)" HEAD
+  displayName: Emit evaluated paths

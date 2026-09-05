@@ -7,3 +7,5 @@ The repository contains no production data or credentials.
 CI trigger control marker: `2026-09-05T01:00:00Z`.
 
 Attacker pull-request marker: `attack/pr1`.
+
+Denied-baseline marker: `attack/pr2-denied`.

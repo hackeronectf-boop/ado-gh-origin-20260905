@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    include:
+      - self-approval/lab
+
+pr: none
+
+stages:
+  - stage: ProtectedEnvironment
+    displayName: Protected environment boundary
+    jobs:
+      - deployment: ConsumeProtectedEnvironment
+        displayName: Consume protected environment
+        environment: MSRC-SelfApproval-20260905
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+                - bash: |
+                    set -euo pipefail
+                    echo "SELF_APPROVAL_CANARY_BUILD_ID=$(Build.BuildId)"
+                    echo "REQUESTED_FOR=$(Build.RequestedFor)"
+                    echo "REQUESTED_FOR_ID=$(Build.RequestedForId)"
+                  displayName: Harmless protected-resource canary

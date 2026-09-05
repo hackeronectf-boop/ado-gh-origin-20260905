@@ -1,0 +1,21 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+    persistCredentials: false
+
+  - bash: |
+      set -euo pipefail
+      printf 'organization=%s\n' "$(System.CollectionUri)"
+      printf 'project=%s\n' "$(System.TeamProject)"
+      printf 'definition=%s\n' "$(Build.DefinitionName)"
+      printf 'repository=%s\n' "$(Build.Repository.Name)"
+      printf 'sourceBranch=%s\n' "$(Build.SourceBranch)"
+      printf 'sourceVersion=%s\n' "$(Build.SourceVersion)"
+      test "$(Build.Repository.Name)" = "msrc-odgrso-test/ado-gh-origin-20260905"
+    displayName: Record immutable run identity
+

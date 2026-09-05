@@ -1,0 +1,6 @@
+# Azure DevOps GitHub Check origin lab
+
+This repository is a disposable, authorized MSRC research fixture for testing whether a Check Run created by the first-party Azure Pipelines GitHub App in one Azure DevOps organization can satisfy a required check configured for a pipeline in another Azure DevOps organization.
+
+The repository contains no production data or credentials.
+

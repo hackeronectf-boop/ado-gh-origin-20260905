@@ -19,3 +19,5 @@ Attacker-only Azure Pipelines App phase: `2026-09-05T01:32:00Z`.
 Critical-chain denied baseline: `2026-09-05T01:37:00Z`.
 
 Critical-chain attacker App phase: `2026-09-05T01:38:00Z`.
+
+Manual secondary-organization App phase: `2026-09-05T01:43:00Z`.

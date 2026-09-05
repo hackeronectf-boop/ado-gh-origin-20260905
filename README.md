@@ -4,3 +4,4 @@ This repository is a disposable, authorized MSRC research fixture for testing wh
 
 The repository contains no production data or credentials.
 
+CI trigger control marker: `2026-09-05T01:00:00Z`.

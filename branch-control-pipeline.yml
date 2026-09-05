@@ -36,8 +36,11 @@ stages:
                     inlineScript: |
                       set -euo pipefail
                       canary="branch-control-build-$(Build.BuildId)-$(Build.SourceVersion)"
-                      az group update \
-                        --name rg-msrc-gh-approval-20260905 \
-                        --set "tags.branch_control_canary=${canary}" \
+                      subscription_id="$(az account show --query id --output tsv)"
+                      resource_id="/subscriptions/${subscription_id}/resourceGroups/rg-msrc-gh-approval-20260905"
+                      az tag update \
+                        --resource-id "${resource_id}" \
+                        --operation Merge \
+                        --tags "branch_control_canary=${canary}" \
                         --output none
                       printf 'branch_control_canary=%s\n' "${canary}"

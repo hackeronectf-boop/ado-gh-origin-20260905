@@ -1,0 +1,43 @@
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: ProtectedDeployment
+    displayName: Branch Control protected deployment
+    jobs:
+      - deployment: UseProtectedWif
+        displayName: Use protected WIF after Branch Control
+        environment: MSRC-BranchControl-20260905
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - bash: |
+                    set -euo pipefail
+                    printf 'source_branch=%s\n' "${BUILD_SOURCEBRANCH}"
+                    printf 'source_version=%s\n' "${BUILD_SOURCEVERSION}"
+                    printf 'pr_source=%s\n' "${SYSTEM_PULLREQUEST_SOURCEBRANCH:-unset}"
+                    printf 'pr_target=%s\n' "${SYSTEM_PULLREQUEST_TARGETBRANCH:-unset}"
+                  displayName: Record evaluated Git refs
+                - task: AzureCLI@2
+                  displayName: Write bounded Branch Control canary
+                  inputs:
+                    azureSubscription: SC-SelfApproval-WIF-20260905
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      set -euo pipefail
+                      canary="branch-control-build-$(Build.BuildId)-$(Build.SourceVersion)"
+                      az group update \
+                        --name rg-msrc-gh-approval-20260905 \
+                        --set "tags.branch_control_canary=${canary}" \
+                        --output none
+                      printf 'branch_control_canary=%s\n' "${canary}"

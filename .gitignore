@@ -1,0 +1,4 @@
+.auth/
+.DS_Store
+*.token
+*.pat

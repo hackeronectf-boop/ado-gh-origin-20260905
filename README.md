@@ -11,3 +11,5 @@ Attacker pull-request marker: `attack/pr1`.
 Denied-baseline marker: `attack/pr2-denied`.
 
 Attacker-status phase marker: `2026-09-05T01:04:00Z`.
+
+Azure Pipelines GitHub App dual-organization control: `2026-09-05T01:27:00Z`.

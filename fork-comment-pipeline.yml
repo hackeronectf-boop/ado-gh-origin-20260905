@@ -1,0 +1,27 @@
+trigger: none
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - fork-comment-marker.txt
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- checkout: self
+  fetchDepth: 1
+- bash: |
+    set -euo pipefail
+    echo "TEST_KIND=fork-comment-authorization"
+    echo "BUILD_REASON=$BUILD_REASON"
+    echo "SOURCE_BRANCH=$BUILD_SOURCEBRANCH"
+    echo "SOURCE_VERSION=$BUILD_SOURCEVERSION"
+    echo "PR_SOURCE_REPO=${SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI:-unset}"
+    echo "PR_IS_FORK=${SYSTEM_PULLREQUEST_ISFORK:-unset}"
+    echo "CHECKOUT_HEAD=$(git rev-parse HEAD)"
+    test -f fork-comment-marker.txt
+    sha256sum fork-comment-marker.txt
+  displayName: Emit immutable source evidence

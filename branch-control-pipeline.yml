@@ -35,7 +35,7 @@ stages:
                     scriptLocation: inlineScript
                     inlineScript: |
                       set -euo pipefail
-                      canary="branch-control-build-$(Build.BuildId)-$(Build.SourceVersion)"
+                      canary="branch-control-pr-attack-build-$(Build.BuildId)-$(Build.SourceVersion)"
                       subscription_id="$(az account show --query id --output tsv)"
                       resource_id="/subscriptions/${subscription_id}/resourceGroups/rg-msrc-gh-approval-20260905"
                       az tag update \

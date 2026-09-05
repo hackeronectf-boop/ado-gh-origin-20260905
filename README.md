@@ -23,3 +23,5 @@ Critical-chain attacker App phase: `2026-09-05T01:38:00Z`.
 Manual secondary-organization App phase: `2026-09-05T01:43:00Z`.
 
 Branch Control merge-ref setup: `2026-09-05T02:09:00Z`.
+
+Branch Control source-YAML attack marker: `2026-09-05T02:18:00Z`.

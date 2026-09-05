@@ -18,9 +18,19 @@ stages:
             deploy:
               steps:
                 - checkout: none
-                - bash: |
-                    set -euo pipefail
-                    echo "SELF_APPROVAL_CANARY_BUILD_ID=$(Build.BuildId)"
-                    echo "REQUESTED_FOR=$(Build.RequestedFor)"
-                    echo "REQUESTED_FOR_ID=$(Build.RequestedForId)"
-                  displayName: Harmless protected-resource canary
+                - task: AzureCLI@2
+                  displayName: Bounded Azure tag canary
+                  inputs:
+                    azureSubscription: SC-SelfApproval-WIF-20260905
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      set -euo pipefail
+                      resource_id=$(az group show --name rg-msrc-gh-approval-20260905 --query id --output tsv)
+                      canary="github-self-approval-run-${BUILD_BUILDID}"
+                      az tag update --resource-id "$resource_id" --operation Merge --tags self_approval_canary="$canary" --output none
+                      observed=$(az tag list --resource-id "$resource_id" --query 'properties.tags.self_approval_canary' --output tsv)
+                      test "$observed" = "$canary"
+                      printf 'SELF_APPROVAL_CANARY=%s\n' "$observed"
+                      printf 'REQUESTED_FOR=%s\n' "$BUILD_REQUESTEDFOR"
+                      printf 'REQUESTED_FOR_ID=%s\n' "$BUILD_REQUESTEDFORID"

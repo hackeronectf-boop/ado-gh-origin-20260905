@@ -1,0 +1,21 @@
+trigger:
+  branches:
+    include:
+      - gh-readonly-queue/main/*
+pr:
+  branches:
+    include:
+      - main
+pool:
+  vmImage: ubuntu-latest
+steps:
+- checkout: self
+  fetchDepth: 1
+- bash: |
+    set -euo pipefail
+    echo "MERGE_QUEUE_REASON=$BUILD_REASON"
+    echo "MERGE_QUEUE_BRANCH=$BUILD_SOURCEBRANCH"
+    echo "MERGE_QUEUE_VERSION=$BUILD_SOURCEVERSION"
+    echo "MERGE_QUEUE_PR_ID=${SYSTEM_PULLREQUEST_PULLREQUESTID:-unset}"
+    echo "MERGE_QUEUE_HEAD=$(git rev-parse HEAD)"
+  displayName: Emit merge-group binding evidence

@@ -1,1 +1,1 @@
-merge-queue-binding-A
+merge-queue-binding-B

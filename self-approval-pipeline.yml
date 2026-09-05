@@ -6,6 +6,7 @@ trigger:
 pr: none
 
 stages:
+  # A new commit to this branch is the GitHub-triggered half of the control.
   - stage: ProtectedEnvironment
     displayName: Protected environment boundary
     jobs:

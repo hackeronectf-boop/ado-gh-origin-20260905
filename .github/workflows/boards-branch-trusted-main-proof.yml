@@ -6,7 +6,7 @@ permissions:
   issues: write
 jobs:
   prove-privileged-origin-event:
-    if: github.ref_type == 'branch' && startsWith(github.ref, 'release/boards-low-trigger-')
+    if: github.event.ref_type == 'branch' && github.event.ref == 'release/boards-low-trigger-2-20260905'
     runs-on: ubuntu-latest
     steps:
       - name: Record repository-secret use and privileged write
@@ -18,7 +18,7 @@ jobs:
           test -n "$PROOF_SECRET"
           secret_sha=$(printf '%s' "$PROOF_SECRET" | sha256sum | cut -d' ' -f1)
           printf 'BOARDS_SECRET_SHA256=%s\n' "$secret_sha"
-          printf 'BOARDS_BRANCH=%s\n' "$GITHUB_REF_NAME"
+          printf 'BOARDS_BRANCH=%s\n' "${{ github.event.ref }}"
           gh api --method POST "repos/$GITHUB_REPOSITORY/issues" \
             -f "title=Azure Boards unauthorized branch proof $GITHUB_RUN_ID" \
-            -f "body=branch=$GITHUB_REF_NAME actor=$GITHUB_ACTOR secret_sha256=$secret_sha" >/dev/null
+            -f "body=branch=${{ github.event.ref }} actor=$GITHUB_ACTOR secret_sha256=$secret_sha" >/dev/null

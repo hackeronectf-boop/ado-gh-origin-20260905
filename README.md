@@ -21,3 +21,5 @@ Critical-chain denied baseline: `2026-09-05T01:37:00Z`.
 Critical-chain attacker App phase: `2026-09-05T01:38:00Z`.
 
 Manual secondary-organization App phase: `2026-09-05T01:43:00Z`.
+
+Different App Check-name negative control: `2026-09-05T02:19:00Z`.

@@ -1,5 +1,13 @@
-trigger: none
-pr: none
+trigger:
+  branches:
+    include:
+      - main
+      - attack/*
+
+pr:
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: ubuntu-latest
@@ -18,4 +26,3 @@ steps:
       printf 'sourceVersion=%s\n' "$(Build.SourceVersion)"
       test "$(Build.Repository.Name)" = "msrc-odgrso-test/ado-gh-origin-20260905"
     displayName: Record immutable run identity
-

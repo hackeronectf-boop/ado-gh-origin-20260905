@@ -13,3 +13,5 @@ Denied-baseline marker: `attack/pr2-denied`.
 Attacker-status phase marker: `2026-09-05T01:04:00Z`.
 
 App-pinned denied baseline: `2026-09-05T01:31:00Z`.
+
+Attacker-only Azure Pipelines App phase: `2026-09-05T01:32:00Z`.
